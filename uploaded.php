@@ -1,5 +1,11 @@
 <?php
 if (isset($_POST['upload_video'])) {
+if (isset($_POST['upload_image'])) {
+if (isset($_POST['upload_pdf'])) {
+    $target_dir = "sample-files/";
+    
+    // Create folder automatically if it doesn't exist
+if (isset($_POST['upload_audio'])) {
     $target_dir = "sample-files/";
     
     if (!is_dir($target_dir)) {
@@ -12,6 +18,24 @@ if (isset($_POST['upload_video'])) {
         echo "<h3>Video Uploaded Successfully!</h3>";
         // This embeds the HTML5 video controller player directly on the webpage
         echo '<video width="640" height="360" controls><source src="' . $target_file . '" type="video/mp4">Your browser does not support the video tag.</video>';
+    $target_file = $target_dir . basename($_FILES["image_file"]["name"]);
+    
+    if (move_uploaded_file($_FILES["image_file"]["tmp_name"], $target_file)) {
+        echo "<h3>Image Uploaded Successfully!</h3>";
+        // This displays the uploaded picture on the webpage
+        echo '<img src="' . $target_file . '" alt="Uploaded Image" style="max-width:100%; height:auto;">';
+    $target_file = $target_dir . basename($_FILES["pdf_file"]["name"]);
+    
+    if (move_uploaded_file($_FILES["pdf_file"]["tmp_name"], $target_file)) {
+        echo "<h3>PDF Uploaded Successfully!</h3>";
+        // This embeds the PDF directly inline on the webpage
+        echo '<object data="' . $target_file . '" type="application/pdf" width="100%" height="600px"></object>';
+    $target_file = $target_dir . basename($_FILES["audio_file"]["name"]);
+    
+    if (move_uploaded_file($_FILES["audio_file"]["tmp_name"], $target_file)) {
+        echo "<h3>Audio Uploaded Successfully!</h3>";
+        // This embeds the HTML5 audio controller player directly on the webpage
+        echo '<audio controls><source src="' . $target_file . '" type="audio/mpeg">Your browser does not support the audio element.</audio>';
     } else {
         echo "Error uploading your file.";
     }
